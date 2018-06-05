@@ -61,7 +61,7 @@ class CRM < Contact
   end
 
   def modify_existing_contact
-    puts "\n---Modify Contact"
+    puts "\n---Modify Contact---"
     puts "Enter ID of the contact you'd like to modify:"
     user_input = gets.to_i
     user_edit = Contact.find(user_input)
@@ -97,7 +97,7 @@ class CRM < Contact
     puts "Do you wish to delete #{delete_value}? y/n?"
     answer = gets.chomp.downcase
       if answer == 'y'
-        @@contacts.delete(delete_value)
+        delete_value.delete(delete_value)
       # binding.pry
       end
   end
@@ -122,6 +122,9 @@ class CRM < Contact
 
 end
 
+at_exit do
+  ActiveRecord::Base.connection.close
+end
 runapp = CRM.new('runapp')
-Contact.create('jeffery','campbell', 'jeffery@gmail.com')
+
 binding.pry
