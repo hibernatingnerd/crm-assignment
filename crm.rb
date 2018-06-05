@@ -57,7 +57,12 @@ class CRM < Contact
     # option note
     puts 'Would you like to leave a note?:'
     note = gets.chomp
-    Contact.create(first_name, last_name, email, note)
+    contact = Contact.create(
+      first_name: first_name,
+      last_name:  last_name,
+      email:      email,
+      note:       note
+      )
   end
 
   def modify_existing_contact
@@ -73,19 +78,19 @@ class CRM < Contact
       puts "Enter new First name"
       new_val = gets.chomp
       # binding.pry
-      user_edit.update("first name", new_val)
+      user_edit.update(:first_name => new_val)
     when 2
       puts "Enter new Last name"
       new_val = gets.chomp
-      user_edit.update("last name", new_val)
+      user_edit.update(:last_name => new_val)
     when 3
       puts "Enter new Email"
       new_val = gets.chomp
-      user_edit.update("email", new_val)
+      user_edit.update(:email => new_val)
     when 4
       puts "Enter new note"
       new_val = gets.chomp
-      user_edit.update("note", new_val)
+      user_edit.update(:note => new_val)
     end
 
   end
@@ -97,29 +102,27 @@ class CRM < Contact
     puts "Do you wish to delete #{delete_value}? y/n?"
     answer = gets.chomp.downcase
       if answer == 'y'
-        delete_value.delete(delete_value)
+        delete_value.delete
       # binding.pry
       end
   end
 
   def display_all_contacts
     puts "----CONTACT LIST----"
-    puts Contact.all
+    puts Contact.each
   end
 
   def search_by_attribute
-    print "enter the attribute you have the value of:"
+    print "enter the attribute (first_name, last_name, email, note)"
     user_attr = gets.chomp.downcase
-    print "enter the value(string)"
+    puts "enter the value"
     user_value = gets.chomp.downcase
-    print Contact.find_by(user_attr, user_value)
+    puts Contact.find_by(user_attr => user_value)
   end
 
   # def show_contact(contact)
   #   puts "#{contact.full_name.split.map(&:capitalize).join(' ')} | email:#{contact.email} | notes:#{contact.note}"
   # end
-
-
 end
 
 at_exit do
